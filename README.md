@@ -9,10 +9,10 @@ It uses a custom-trained YOLOv8 model integrated with OpenCV to detect objects l
 https://github.com/Nisarga-arun/Real_time-Object-Detection---using-YOLO.git
 
 # step2:install all the necessary libraries
-pip install ultralytics
-brew install opencv 
-pip insall cv2
-pip install math
+pip install ultralytics  
+brew install opencv   
+pip insall cv2  
+pip install math  
 
 # step3:test and validate a images using roboflow.
 !pip install roboflow
@@ -59,6 +59,6 @@ model = YOLO("best.pt")
 
 # If you want in tf.lite format--->Export to TensorFlow Lite
 model.export(format="tflite")
-#
+
 from google.colab import files
 files.download("best_saved_model/best_float32.tflite")
