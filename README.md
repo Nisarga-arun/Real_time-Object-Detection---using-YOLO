@@ -58,6 +58,6 @@ model = YOLO("best.pt")
 
 # If you want in tf.lite format--->Export to TensorFlow Lite
 model.export(format="tflite")  
-
+  or  
 from google.colab import files  
 files.download("best_saved_model/best_float32.tflite")  
