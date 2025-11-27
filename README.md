@@ -15,50 +15,49 @@ pip insall cv2
 pip install math  
 
 # step3:test and validate a images using roboflow.
-!pip install roboflow
-from roboflow import Roboflow
-rf = Roboflow(api_key="NcQTPGpmTwPjOgeIqNDn")
-project = rf.workspace("nisarga-0lhwb").project("coins-wqct4")
-version = project.version(4)
-dataset = version.download("yolov8")
+!pip install roboflow  
+from roboflow import Roboflow  
+rf = Roboflow(api_key="NcQTPGpmTwPjOgeIqNDn")  
+project = rf.workspace("nisarga-0lhwb").project("coins-wqct4")  
+version = project.version(4)  
+dataset = version.download("yolov8")  
 
 # step4:Train the model on Google colab.
-!nvidia-smi        # check GPU
-!pip install ultralytics
+!nvidia-smi        # check GPU  
+!pip install ultralytics  
 
 
-from ultralytics import YOLO
-import os
+from ultralytics import YOLO  
+import os  
+
+!pip install roboflow  
+
+from roboflow import Roboflow  
+rf = Roboflow(api_key="NcQTPGpmTwPjOgeIqNDn")  
+project = rf.workspace("nisarga-0lhwb").project("coins-wqct4")  
+version = project.version(4)  
+dataset = version.download("yolov8")  
 
 
-!pip install roboflow
+model = YOLO("yolov8n.pt")   # You can use 'yolov8s.pt' or 'yolov8m.pt' for higher accuracy  
 
-from roboflow import Roboflow
-rf = Roboflow(api_key="NcQTPGpmTwPjOgeIqNDn")
-project = rf.workspace("nisarga-0lhwb").project("coins-wqct4")
-version = project.version(4)
-dataset = version.download("yolov8")
+model.train(  
+    data="/content/coins-4/data.yaml",  
+    epochs=20,  
+    imgsz=640,  
+    batch=16,  
+    name="custom_yolov8_model",  
+    device=0  
+)  
 
-
-model = YOLO("yolov8n.pt")   # You can use 'yolov8s.pt' or 'yolov8m.pt' for higher accuracy
-
-model.train(
-    data="/content/coins-4/data.yaml",
-    epochs=20,
-    imgsz=640,
-    batch=16,
-    name="custom_yolov8_model",
-    device=0
-)
-
-from google.colab import files
-uploaded = files.upload()
+from google.colab import files  
+uploaded = files.upload()  
 
 # Load your uploaded model
-model = YOLO("best.pt")
+model = YOLO("best.pt")  
 
 # If you want in tf.lite format--->Export to TensorFlow Lite
-model.export(format="tflite")
+model.export(format="tflite")  
 
-from google.colab import files
-files.download("best_saved_model/best_float32.tflite")
+from google.colab import files  
+files.download("best_saved_model/best_float32.tflite")  
